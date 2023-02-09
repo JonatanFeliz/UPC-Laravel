@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', [MainController::class, 'index'])->name('home');
+Route::get('/howtoplay', [MainController::class, 'howtoplay'])->name('rules');
+Route::get('/team', [MainController::class, 'team'])->name('team');
+Route::get('/contact', [MainController::class, 'contact'])->name('contact');
+Route::get('/login', [MainController::class, 'login'])->name('login');
+Route::get('/register', [MainController::class, 'register'])->name('register');
