@@ -19,11 +19,11 @@ class ScoreFactory extends Factory
     public function definition()
     {
         return [
-            'player_name' => $this->faker->word(),
+            'player_name' => fake()->name(),
             'level'       => $this->faker->numberBetween(1, 10),
-            'points'      => $this->faker->numberBetween(),
-            'wins'        => $this->faker->numberBetween(),
-            'lose'        => $this->faker->numberBetween(),
+            'points'      => $this->faker->numberBetween(1, 1000000),
+            'wins'        => $this->faker->numberBetween(1, 10000),
+            'lose'        => $this->faker->numberBetween(1, 10000),
         ];
     }
 }
