@@ -3,9 +3,6 @@
 namespace Illuminate\Database\Eloquent\Concerns;
 
 use BackedEnum;
-use Brick\Math\BigDecimal;
-use Brick\Math\Exception\MathException as BrickMathException;
-use Brick\Math\RoundingMode;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use DateTimeImmutable;
@@ -26,7 +23,6 @@ use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as BaseCollection;
-use Illuminate\Support\Exceptions\MathException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -35,6 +31,8 @@ use LogicException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
+use RuntimeException;
+use TypeError;
 
 trait HasAttributes
 {
@@ -1324,11 +1322,21 @@ trait HasAttributes
      */
     protected function asDecimal($value, $decimals)
     {
-        try {
-            return (string) BigDecimal::of($value)->toScale($decimals, RoundingMode::HALF_UP);
-        } catch (BrickMathException $e) {
-            throw new MathException('Unable to cast value to a decimal.', previous: $e);
+        if (extension_loaded('bcmath')) {
+            return bcadd($value, 0, $decimals);
         }
+
+        if (! is_numeric($value)) {
+            throw new TypeError('$value must be numeric.');
+        }
+
+        if (is_string($value) && Str::contains($value, 'e', true)) {
+            throw new RuntimeException('The "decimal" model cast is unable to handle string based floats with exponents.');
+        }
+
+        [$int, $fraction] = explode('.', $value) + [1 => ''];
+
+        return Str::of($int)->padLeft('1', '0').'.'.Str::of($fraction)->limit($decimals, '')->padRight($decimals, '0');
     }
 
     /**

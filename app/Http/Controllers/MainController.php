@@ -15,7 +15,13 @@ class MainController extends Controller
     }
 
     public function team(){
-        return view('team');
+
+        $names_upc = ["Laura Fernandez", "Marina Iniesta", "Carla Abascal", "Alejandro"];
+
+        $names_proven = ["Jonatan Feliz", "Pau Martinez","Sonia Morales", "Anthony Reyes", "Ruyou Hu Ye"];
+
+
+        return view('team', compact('names_upc','names_proven'));
     }
 
     public function contact(){

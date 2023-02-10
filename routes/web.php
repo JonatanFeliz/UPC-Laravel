@@ -18,8 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
 Route::get('/home', [MainController::class, 'index'])->name('home');
 Route::get('/howtoplay', [MainController::class, 'howtoplay'])->name('rules');
 Route::get('/team', [MainController::class, 'team'])->name('team');

@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-scroll shadow-0 py-4" style="background-color: #0A2640">
     <div class="container">
       <img src="/img/Mediamodifier-Design.svg" height="65px" width="65px">
+      <p class="text-white ms-2 align-self-center" style="font-size: 30px; padding-top:13px;">Othello</p>
       <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
         data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">

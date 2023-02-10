@@ -37,7 +37,7 @@ class InstallCommand extends Command
         'memcached',
         'meilisearch',
         'minio',
-        'mailpit',
+        'mailhog',
         'selenium',
     ];
 
@@ -51,7 +51,7 @@ class InstallCommand extends Command
         if ($this->option('with')) {
             $services = $this->option('with') == 'none' ? [] : explode(',', $this->option('with'));
         } elseif ($this->option('no-interaction')) {
-            $services = ['mysql', 'redis', 'selenium', 'mailpit'];
+            $services = ['mysql', 'redis', 'selenium', 'mailhog'];
         } else {
             $services = $this->gatherServicesWithSymfonyMenu();
         }

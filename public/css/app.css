@@ -8,9 +8,14 @@
 .text-success{
     color: #5ee4a3;
  }
- .btn-success{
+ .btn-download{
      background-color: #5ee4a3;
  }
+
+ .btn-download:hover{
+    background-color: #34B36E;
+ }
+
  .border-green{
      border-color: #5ee4a3;
  }
