@@ -4,7 +4,11 @@
 
 
     <section>
-        <p>El resultado es {{$result}}</p>
+        @if($result)
+            Bien logueado!!
+        @else
+            Mal logueado!!
+        @endif
     </section>
 
     <x-layouts.footer/>
