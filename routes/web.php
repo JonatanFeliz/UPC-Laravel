@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+
+// Main Controller
 Route::get('/home', [MainController::class, 'index'])->name('home');
 Route::get('/howtoplay', [MainController::class, 'howtoplay'])->name('rules');
 Route::get('/team', [MainController::class, 'team'])->name('team');
 Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 Route::get('/login', [MainController::class, 'login'])->name('login');
 Route::get('/register', [MainController::class, 'register'])->name('register');
+
+
+
+// User Controller
+Route::post('/login-entry', [UserController::class, 'validateLogin'])->name('login.entry');
+Route::post('/register-add', [UserController::class, 'register'])->name('register.add');
+
+Route::get('/message', function () {
+    return view('userMessage');
+});
+
+// Score Controller
