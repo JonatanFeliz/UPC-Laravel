@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tournament extends Model
 {
+    protected $fillable = [
+        'name',
+        'tournament_date',
+    ];
+
     use HasFactory;
 
 
-    public function user(){
-        return $this->hasMany(User::class);
+    public function users(){
+        return $this->belongsToMany(User::class);
     }
 }

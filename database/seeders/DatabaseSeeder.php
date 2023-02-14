@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use App\Models\Rol;
 use App\Models\Tournament;
 use App\Models\User;
+use App\Models\UserTournament;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
         Tournament::factory(10)->create();
         
         User::factory(5)->create();
+
+        UserTournament::factory(2)->create();
 
         // \App\Models\User::factory(10)->create();
 

@@ -31,16 +31,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     // //mutator para poder modificar la contraseña  y que se guarde como un valor encriptado
@@ -49,11 +39,11 @@ class User extends Authenticatable
     // }
 
 
-    public function rol(){
-        return $this->hasOne(User::class);
+    public function rols(){
+        return $this->belongsTo(Rol::class);
     }
-    public function tournament(){
-        return $this->hasMany(User::class);
+    public function tournaments(){
+        return $this->belongsToMany(Tournament::class);
     }
     
     

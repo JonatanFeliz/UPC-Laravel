@@ -20,16 +20,19 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
 
+            $table->unsignedBigInteger('rol_id');
 
+            $table->foreign('rol_id')->references('id')->on('rols');
             // $table->string('rol_id')->default('1')->change();
             // $table->foreign('rol_id')
             //     ->references('id')
             //     ->on('roles')
             //     ->cascadeOnDelete();
 
-            $table->foreignId('rol_id')
-                ->constrained()
-                ->cascadeOnDelete();
+            // $table->foreignId('rol_id')
+            //     ->nullable()
+            //     ->constrained()
+            //     ->cascadeOnDelete();
 
             $table->timestamps();
         });

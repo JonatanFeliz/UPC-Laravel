@@ -23,6 +23,7 @@ class UserFactory extends Factory
             'last_name'      => $this->faker->lastName,
             'email'          => fake()->unique()->safeEmail(),
             'password'       => Str::random(8), // password
+            'rol_id'         => 1,
         ];
     }
 
