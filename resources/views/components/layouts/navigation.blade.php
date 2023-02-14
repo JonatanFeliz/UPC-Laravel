@@ -21,8 +21,11 @@
           <li class="nav-item">
             <a class="nav-link text-white" href="{{ route('contact') }}" style="color:FFFFFF;">Contacto</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{{ route('contact') }}" style="color:FFFFFF;">Contacto</a>
+          </li>
           <button type="button" class="btn btn-light text-body ms-3 rounded-pill">
-            <a href="{{ route('login') }}" class="text-decoration-none text-body">Iniciar Sesión</a> 
+            <a href="{{ route('score') }}" class="text-decoration-none text-body">Puntuacion</a> 
           </button>
         </ul>
       </div>

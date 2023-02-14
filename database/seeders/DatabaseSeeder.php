@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 use App\Models\Rol;
-use App\Models\Score;
+use App\Models\Tournament;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Score::factory(10)->create();
+        Rol::factory(2)->create();
+
+        Tournament::factory(10)->create();
         
         User::factory(5)->create();
 

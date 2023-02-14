@@ -21,19 +21,16 @@ return new class extends Migration
             $table->string('password');
 
 
-            // $table->unsignedBigInteger('rol_id');
+            // $table->string('rol_id')->default('1')->change();
             // $table->foreign('rol_id')
             //     ->references('id')
-            //     ->on('rols')
-            //     ->onDelete('cascade');
-
+            //     ->on('roles')
+            //     ->cascadeOnDelete();
 
             $table->foreignId('rol_id')
-                ->nullable()
                 ->constrained()
-                ->nullOnDelete();
+                ->cascadeOnDelete();
 
-            $table->rememberToken();
             $table->timestamps();
         });
     }

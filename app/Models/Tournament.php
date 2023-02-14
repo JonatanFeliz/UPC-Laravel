@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
-class Score extends Model
+class Tournament extends Model
 {
     use HasFactory;
 
 
-    function getData(){
-        $score = DB::table('scores')->get();
-
-        return $score;
+    public function user(){
+        return $this->hasMany(User::class);
     }
 }

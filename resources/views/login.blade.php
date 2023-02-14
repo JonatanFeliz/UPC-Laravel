@@ -25,6 +25,12 @@
                   <a href="{{ route('home') }}" class="text-center text-decoration-none text-white">Volver a Home</a>
                 
                 </form>
+
+                @if ()
+                    
+                @else
+                    
+                @endif
             </div>
         </div>
     </div>

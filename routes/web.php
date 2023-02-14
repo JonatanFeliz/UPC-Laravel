@@ -28,7 +28,7 @@ Route::get('/team', [MainController::class, 'team'])->name('team');
 Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 Route::get('/login', [MainController::class, 'login'])->name('login');
 Route::get('/register', [MainController::class, 'register'])->name('register');
-
+Route::get('/score', [MainController::class, 'score'])->name('score');
 
 
 // User Controller

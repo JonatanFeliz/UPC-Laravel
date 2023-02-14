@@ -35,4 +35,7 @@ class MainController extends Controller
     public function register(){
         return view('register');
     }
+    public function score(){
+        return view('score');
+    }
 }
