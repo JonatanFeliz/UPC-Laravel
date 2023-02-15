@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Tournament;
 
 class TournamentController extends Controller
 {
@@ -15,6 +16,8 @@ class TournamentController extends Controller
     public function index()
     {
         //
+        $datos['tournaments']=Tournament::paginate(20);
+        return view('tournament.index', $datos);
     }
 
     /**
@@ -25,6 +28,7 @@ class TournamentController extends Controller
     public function create()
     {
         //
+        return view('tournament.create');
     }
 
     /**
@@ -36,6 +40,14 @@ class TournamentController extends Controller
     public function store(Request $request)
     {
         //
+        $tournamentData = request()->except('_token');
+        Tournament::insert($tournamentData);
+
+
+        if($request->hasFile('Name')){
+            $tournamentData['Name']=$request->file('Name')->store('uploads', 'public');
+        }
+        return view('tournament.create');
     }
 
     /**
@@ -58,6 +70,8 @@ class TournamentController extends Controller
     public function edit($id)
     {
         //
+        $tournament=Tournament::findOrFail($id);
+        return view('tournament.edit', compact('tournament'));
     }
 
     /**
@@ -70,6 +84,9 @@ class TournamentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $tournamentData = request()->except(['_token', '_method']);
+        Tournament::where('id','=', $id)->update($tournamentData);
+        return redirect()->route('tournament.index');
     }
 
     /**
@@ -81,5 +98,7 @@ class TournamentController extends Controller
     public function destroy($id)
     {
         //
+        Tournament::destroy($id);
+        return redirect('tournament');
     }
 }

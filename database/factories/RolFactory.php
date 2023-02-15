@@ -17,9 +17,8 @@ class RolFactory extends Factory
      */
     public function definition()
     {
-        return [ //Hacer que se pongan dos roles, uno de cliente y el otro de admin, con sus descripciones
-            'rol_name'     => $this->faker->firstName,
-            'description'  => $this->faker->lastName,
+        return [ 
+            //
         ];
     }
 }

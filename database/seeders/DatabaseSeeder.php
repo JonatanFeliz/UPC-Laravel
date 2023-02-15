@@ -18,13 +18,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Rol::factory(2)->create();
+        Rol::factory(2)
+        ->sequence(
+            [
+                'rol_name'    => 'admin',
+                'description' => 'Usuario Administrador'
+            ],
+            [
+                'rol_name'    => 'client',
+                'description' => 'Usuario Cliente'
+            ],
+        ) 
+        ->create();
 
         Tournament::factory(10)->create();
         
-        User::factory(5)->create();
+        User::factory(10)->create();
 
-        UserTournament::factory(2)->create();
+        UserTournament::factory(10)->create();
 
         // \App\Models\User::factory(10)->create();
 

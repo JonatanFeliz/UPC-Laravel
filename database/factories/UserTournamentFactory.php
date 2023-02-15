@@ -18,8 +18,8 @@ class UserTournamentFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'        => 1,
-            'tournament_id'  => 1,
+            'user_id'        => fake()->numberBetween(1,10),
+            'tournament_id'  => fake()->numberBetween(1,10),
         ];
     }
 }

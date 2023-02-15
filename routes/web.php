@@ -3,6 +3,7 @@
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TournamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,11 @@ Route::get('/login', [MainController::class, 'login'])->name('login');
 Route::get('/register', [MainController::class, 'register'])->name('register');
 Route::get('/score', [MainController::class, 'score'])->name('score');
 
+//Tournament Controller
+Route::get('/tournament/index', [TournamentController::class, 'index'])->name('index');
+Route::get('/tournament/create', [TournamentController::class, 'create'])->name('create');
+
+Route::resource('tournament', TournamentController::class);
 
 // User Controller
 Route::post('/login-entry', [UserController::class, 'validateLogin'])->name('login.entry');

@@ -26,11 +26,6 @@
                 
                 </form>
 
-                @if ()
-                    
-                @else
-                    
-                @endif
             </div>
         </div>
     </div>
