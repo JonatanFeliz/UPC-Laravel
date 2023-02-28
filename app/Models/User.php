@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $table = 'users';
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -44,6 +46,12 @@ class User extends Authenticatable
     }
     public function tournaments(){
         return $this->belongsToMany(Tournament::class);
+    }
+    protected function type(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  ["user", "admin"][$value],
+        );
     }
     
     

@@ -14,6 +14,8 @@ class Tournament extends Model
 
     use HasFactory;
 
+    protected $table = 'tournaments';
+
 
     public function users(){
         return $this->belongsToMany(User::class);

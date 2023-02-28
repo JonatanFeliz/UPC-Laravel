@@ -15,20 +15,8 @@ class TournamentController extends Controller
      */
     public function index()
     {
-        //
-        $datos['tournaments']=Tournament::paginate(20);
-        return view('tournament.index', $datos);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('tournament.create');
+        return $tournaments = Tournament::all();
+        //return view('tournaments', compact('tournaments'));
     }
 
     /**
@@ -39,15 +27,18 @@ class TournamentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $tournamentData = request()->except('_token');
-        Tournament::insert($tournamentData);
+        $request->validate([
+            'name'        => 'required',
+            'date'        => 'required'
+        ]);
 
+        $tournament = new Tournament();
+        $tournament->name   = $request->name;
+        $tournament->tournament_date   = $request->date;
 
-        if($request->hasFile('Name')){
-            $tournamentData['Name']=$request->file('Name')->store('uploads', 'public');
-        }
-        return view('tournament.create');
+        $tournament->save();
+
+        return $tournament;
     }
 
     /**
@@ -58,20 +49,9 @@ class TournamentController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $tournament = Tournament::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-        $tournament=Tournament::findOrFail($id);
-        return view('tournament.edit', compact('tournament'));
+        return $tournament;
     }
 
     /**
@@ -81,12 +61,20 @@ class TournamentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tournament $tournament)
     {
-        //
-        $tournamentData = request()->except(['_token', '_method']);
-        Tournament::where('id','=', $id)->update($tournamentData);
-        return redirect()->route('tournament.index');
+        // $request->validate([
+        //     'name'        => 'required',
+        //     'date'       => 'required'
+        // ]);
+
+        $tournament = new Tournament();
+        $tournament->name             = $request->name;
+        $tournament->tournament_date  = $request->date;
+
+        $tournament->update();
+
+        return $tournament;
     }
 
     /**
@@ -97,8 +85,14 @@ class TournamentController extends Controller
      */
     public function destroy($id)
     {
-        //
-        Tournament::destroy($id);
-        return redirect('tournament');
+        $tournament = Tournament::find($id);
+
+        if(is_null($tournament)){
+            return response()->json("No se pudo realizar correctamente borrado",404);
+        }
+
+        $tournament->delete();
+
+        return response()->noContent();
     }
 }
