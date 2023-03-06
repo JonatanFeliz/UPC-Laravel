@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +26,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $table = 'users';
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -33,17 +33,9 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
-    // //mutator para poder modificar la contraseña  y que se guarde como un valor encriptado
-    // public function setPasswordAttribute($value){
-    //     $this->attributes['password'] = bcrypt($value);
-    // }
-
-
-    public function rols(){
-        return $this->belongsTo(Rol::class);
-    }
     public function tournaments(){
         return $this->belongsToMany(Tournament::class);
     }
@@ -53,6 +45,4 @@ class User extends Authenticatable
             get: fn ($value) =>  ["user", "admin"][$value],
         );
     }
-    
-    
 }

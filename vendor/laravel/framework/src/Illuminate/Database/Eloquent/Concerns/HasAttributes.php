@@ -3,6 +3,9 @@
 namespace Illuminate\Database\Eloquent\Concerns;
 
 use BackedEnum;
+use Brick\Math\BigDecimal;
+use Brick\Math\Exception\MathException as BrickMathException;
+use Brick\Math\RoundingMode;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use DateTimeImmutable;
@@ -23,6 +26,7 @@ use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection as BaseCollection;
+use Illuminate\Support\Exceptions\MathException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
@@ -31,8 +35,6 @@ use LogicException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
-use RuntimeException;
-use TypeError;
 
 trait HasAttributes
 {
@@ -110,15 +112,6 @@ trait HasAttributes
         'string',
         'timestamp',
     ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @deprecated Use the "casts" property
-     *
-     * @var array
-     */
-    protected $dates = [];
 
     /**
      * The storage format of the model's date columns.
@@ -1322,21 +1315,11 @@ trait HasAttributes
      */
     protected function asDecimal($value, $decimals)
     {
-        if (extension_loaded('bcmath')) {
-            return bcadd($value, 0, $decimals);
+        try {
+            return (string) BigDecimal::of($value)->toScale($decimals, RoundingMode::HALF_UP);
+        } catch (BrickMathException $e) {
+            throw new MathException('Unable to cast value to a decimal.', previous: $e);
         }
-
-        if (! is_numeric($value)) {
-            throw new TypeError('$value must be numeric.');
-        }
-
-        if (is_string($value) && Str::contains($value, 'e', true)) {
-            throw new RuntimeException('The "decimal" model cast is unable to handle string based floats with exponents.');
-        }
-
-        [$int, $fraction] = explode('.', $value) + [1 => ''];
-
-        return Str::of($int)->padLeft('1', '0').'.'.Str::of($fraction)->limit($decimals, '')->padRight($decimals, '0');
     }
 
     /**
@@ -1395,7 +1378,7 @@ trait HasAttributes
         // that is returned back out to the developers after we convert it here.
         try {
             $date = Date::createFromFormat($format, $value);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             $date = false;
         }
 
@@ -1457,16 +1440,10 @@ trait HasAttributes
      */
     public function getDates()
     {
-        if (! $this->usesTimestamps()) {
-            return $this->dates;
-        }
-
-        $defaults = [
+        return $this->usesTimestamps() ? [
             $this->getCreatedAtColumn(),
             $this->getUpdatedAtColumn(),
-        ];
-
-        return array_unique(array_merge($this->dates, $defaults));
+        ] : [];
     }
 
     /**
@@ -1615,9 +1592,7 @@ trait HasAttributes
             return false;
         }
 
-        if (function_exists('enum_exists') && enum_exists($castType)) {
-            return true;
-        }
+        return enum_exists($castType);
     }
 
     /**

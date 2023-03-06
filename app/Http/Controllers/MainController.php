@@ -30,24 +30,4 @@ class MainController extends Controller
     public function contact(){
         return view('contact');
     }
-
-    public function login(){
-        return view('login');
-    }
-
-    public function register(){
-        return view('register');
-    }
-
-    public function tournament(){
-        return view('tournaments.index');
-    }
-
-    public function tournament_add(){
-        return view('tournaments.create');
-    }
-
-    public function tournament_edit(){
-        return view('tournaments.edit');
-    }
 }

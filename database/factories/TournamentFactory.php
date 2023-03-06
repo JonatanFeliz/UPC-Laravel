@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Tournament;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tournament>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\=Tournament>
  */
 class TournamentFactory extends Factory
 {
@@ -15,7 +14,7 @@ class TournamentFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name'            => fake()->word(),

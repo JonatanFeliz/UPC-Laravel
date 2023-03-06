@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tournament extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'tournament_date',
     ];
-
-    use HasFactory;
 
     protected $table = 'tournaments';
 

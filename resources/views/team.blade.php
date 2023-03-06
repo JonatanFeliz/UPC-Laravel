@@ -40,5 +40,3 @@
     <x-layouts.footer/>
 
 </x-layouts.app>
-
-
